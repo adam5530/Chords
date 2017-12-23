@@ -2,9 +2,15 @@
 #include "Guitar.h"
 
 
-Guitar::Guitar():
-	chords(new std::string*[12])
+Guitar::Guitar()
+	: chords(new std::string*[12])
+	, console(GetStdHandle(STD_OUTPUT_HANDLE))
 {
+	rect.Top = 0;
+	rect.Left = 0;
+	rect.Bottom = 22;
+	rect.Right = 50;
+	SetConsoleWindowInfo(console, true, &rect);
 	for (unsigned int i = 0; i < 12; ++i)
 		chords[i] = new std::string[4];
 	//chords[0] -- [2] chord, [3] -- [8] thresholds, [9] -- [10] barre threshold
@@ -51,17 +57,17 @@ void Guitar::drawStrings()
 
 void Guitar::listChords()
 {
-	unsigned int xPos = 0;
-	unsigned int yPos = 0;
 	system("Color 18");
 	HANDLE hOut = GetStdHandle(STD_OUTPUT_HANDLE);;
 	SetConsoleTextAttribute(hOut, BACKGROUND_GREEN|FOREGROUND_BLUE);
+	std::cout << std::endl;
 	for (unsigned int i = 0; i < 12; ++i) //chord C, D, E
 	{
 		for (unsigned int j = 0; j < 4; ++j) //chord C moll, C dur, C dur 7
 			std::cout << "\t" << chords[i][j][0] << chords[i][j][1] << chords[i][j][2];
-		std::cout << std::endl;
+		std::cout << "\t" << std::endl;
 	}
+	std::cout << "Press ESC to back to main menu\t\t" << std::endl;
 }
 
 int Guitar::chord() const
@@ -74,4 +80,55 @@ bool Guitar::exit()
 	if (GetAsyncKeyState(VK_ESCAPE))
 		return true;
 	return false;
+}
+
+void Guitar::gotoXY(int x, int y)
+{
+	cursorPos.X = x;
+	cursorPos.Y = y;
+	SetConsoleCursorPosition(console, cursorPos);
+}
+
+void Guitar::moveCursor()
+{
+	int menu_item = 0, run, x = 6, y = 8;
+	bool running = true;
+	gotoXY(6, 8); std::cout << "->";
+	while (running)
+	{
+		system("pause>nul");
+		if (GetAsyncKeyState(VK_DOWN) && y < 19)
+		{
+			gotoXY(x, y); std::cout << "  ";
+			y++;
+			gotoXY(x, y); std::cout << "->";
+			menu_item++;
+			continue;
+		}
+
+		if (GetAsyncKeyState(VK_UP) && y > 8)
+		{
+			gotoXY(x, y); std::cout << "  ";
+			y--;
+			gotoXY(x, y); std::cout << "->";
+			menu_item--;
+			continue;
+		}
+
+		if (GetAsyncKeyState(VK_LEFT) && x > 13)
+		{
+			gotoXY(x, y); std::cout << "  ";
+			x -= 8;
+			gotoXY(x, y); std::cout << "->";
+			continue;
+		}
+
+		if (GetAsyncKeyState(VK_RIGHT) && x < 28)
+		{
+			gotoXY(x, y); std::cout << "  ";
+			x += 8;
+			gotoXY(x, y); std::cout << "->";
+			continue;
+		}
+	}
 }
