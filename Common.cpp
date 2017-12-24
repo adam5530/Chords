@@ -1,7 +1,7 @@
 #include "Common.h"
 
-
 Common::Common()
+	: console(GetStdHandle(STD_OUTPUT_HANDLE))
 {
 }
 

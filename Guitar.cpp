@@ -3,7 +3,6 @@
 
 Guitar::Guitar()
 	: chords(new std::string*[12])
-	, console(GetStdHandle(STD_OUTPUT_HANDLE))
 {
 	rect.Top = 0;
 	rect.Left = 0;
@@ -81,51 +80,45 @@ bool Guitar::exit()
 	return false;
 }
 
-void Guitar::gotoXY(int x, int y)
-{
-	cursorPos.X = x;
-	cursorPos.Y = y;
-	SetConsoleCursorPosition(console, cursorPos);
-}
 
 void Guitar::moveCursor()
 {
 	int x = 6, y = 8;
 	bool running = true;
 	const char* marker = "*";
-	gotoXY(6, 8); std::cout << marker;
+	Common::gotoXY(6, 8); std::cout << marker;
 	while (running)
 	{
 		system("pause>nul");
 		if (GetAsyncKeyState(VK_DOWN) && y < 19)
 		{
-			gotoXY(x, y); std::cout << "  ";
+			Common::gotoXY(x, y); std::cout << "  ";
 			y++;
-			gotoXY(x, y); std::cout << marker;
+			Common::gotoXY(x, y); std::cout << marker;
 			continue;
 		}
 
 		if (GetAsyncKeyState(VK_UP) && y > 8)
 		{
-			gotoXY(x, y); std::cout << "  ";
+			Common::gotoXY(x, y); std::cout << "  ";
 			y--;
-			gotoXY(x, y); std::cout << marker;
+			Common::gotoXY(x, y); std::cout << marker;
 			continue;
 		}
 
 		if (GetAsyncKeyState(VK_LEFT) && x > 13)
 		{
-			gotoXY(x, y); std::cout << "  ";
+			Common::gotoXY(x, y); std::cout << "  ";
 			x -= 8;
-			gotoXY(x, y); std::cout << marker;
+			Common::gotoXY(x, y); std::cout << marker;
 			continue;
 		}
 
 		if (GetAsyncKeyState(VK_RIGHT) && x < 28)
 		{
-			gotoXY(x, y); std::cout << "  ";
+			Common::gotoXY(x, y); std::cout << "  ";
 			x += 8;
-			gotoXY(x, y); std::cout << marker;
+			Common::gotoXY(x, y); std::cout << marker;
 			continue;
 		}
 		if (GetAsyncKeyState(VK_ESCAPE))

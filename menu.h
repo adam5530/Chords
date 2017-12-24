@@ -16,7 +16,6 @@ public:
 	~menu();
 
 	void drawMenu();
-	void gotoXY(int, int);
 };
 
 #endif // MENU_H

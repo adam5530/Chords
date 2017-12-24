@@ -24,7 +24,6 @@ public:
 
 	void drawStrings();
 	void listChords();
-	void gotoXY(int, int);
 	void moveCursor();
 
 	int chord() const;
