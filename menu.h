@@ -2,9 +2,10 @@
 #define MENU_H
 
 #include <iostream>
-#include <windows.h>
 
-class menu
+#include "Common.h"
+
+class menu : public Common
 {
 private:
 	HANDLE console;

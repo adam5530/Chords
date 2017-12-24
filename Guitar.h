@@ -2,9 +2,10 @@
 #define GUITAR_H
 
 #include <iostream>
-#include <windows.h>
 
-class Guitar
+#include "Common.h"
+
+class Guitar : public Common
 {
 private:
 	std::string** chords;
@@ -13,6 +14,9 @@ private:
 	HANDLE console;
 	COORD cursorPos;
 	SMALL_RECT rect;
+
+	int xChords;
+	int yChords;
 
 public:
 	Guitar();

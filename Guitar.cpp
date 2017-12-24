@@ -1,4 +1,3 @@
-#include "stdafx.h"	
 #include "Guitar.h"
 
 
@@ -58,7 +57,7 @@ void Guitar::drawStrings()
 void Guitar::listChords()
 {
 	system("Color 18");
-	HANDLE hOut = GetStdHandle(STD_OUTPUT_HANDLE);;
+	HANDLE hOut = GetStdHandle(STD_OUTPUT_HANDLE);
 	SetConsoleTextAttribute(hOut, BACKGROUND_GREEN|FOREGROUND_BLUE);
 	std::cout << std::endl;
 	for (unsigned int i = 0; i < 12; ++i) //chord C, D, E
@@ -67,7 +66,7 @@ void Guitar::listChords()
 			std::cout << "\t" << chords[i][j][0] << chords[i][j][1] << chords[i][j][2];
 		std::cout << "\t" << std::endl;
 	}
-	std::cout << "Press ESC to back to main menu\t\t" << std::endl;
+	std::cout << "      Press ESC to back to main menu\t" << std::endl;
 }
 
 int Guitar::chord() const
@@ -91,9 +90,10 @@ void Guitar::gotoXY(int x, int y)
 
 void Guitar::moveCursor()
 {
-	int menu_item = 0, run, x = 6, y = 8;
+	int x = 6, y = 8;
 	bool running = true;
-	gotoXY(6, 8); std::cout << "->";
+	const char* marker = "*";
+	gotoXY(6, 8); std::cout << marker;
 	while (running)
 	{
 		system("pause>nul");
@@ -101,8 +101,7 @@ void Guitar::moveCursor()
 		{
 			gotoXY(x, y); std::cout << "  ";
 			y++;
-			gotoXY(x, y); std::cout << "->";
-			menu_item++;
+			gotoXY(x, y); std::cout << marker;
 			continue;
 		}
 
@@ -110,8 +109,7 @@ void Guitar::moveCursor()
 		{
 			gotoXY(x, y); std::cout << "  ";
 			y--;
-			gotoXY(x, y); std::cout << "->";
-			menu_item--;
+			gotoXY(x, y); std::cout << marker;
 			continue;
 		}
 
@@ -119,7 +117,7 @@ void Guitar::moveCursor()
 		{
 			gotoXY(x, y); std::cout << "  ";
 			x -= 8;
-			gotoXY(x, y); std::cout << "->";
+			gotoXY(x, y); std::cout << marker;
 			continue;
 		}
 
@@ -127,8 +125,13 @@ void Guitar::moveCursor()
 		{
 			gotoXY(x, y); std::cout << "  ";
 			x += 8;
-			gotoXY(x, y); std::cout << "->";
+			gotoXY(x, y); std::cout << marker;
 			continue;
+		}
+		if (GetAsyncKeyState(VK_ESCAPE))
+		{
+			system("cls");
+			running = false;
 		}
 	}
 }
