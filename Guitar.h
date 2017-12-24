@@ -32,6 +32,7 @@ public:
 	void moveCursor();		//function to move cursor in the list of chords
 	void resetMarkerPos();	//set marker position 0 0
 	void setThresholds();
+	void setDefaultParameters();
 
 	bool exit();
 };

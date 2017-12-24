@@ -13,6 +13,7 @@ private:
 
 protected:
 	void gotoXY(int, int);
+	int menu_item;
 
 public:
 	Common();

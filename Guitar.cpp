@@ -1,6 +1,5 @@
 #include "Guitar.h"
 
-
 Guitar::Guitar()
 	: chords(new std::string*[12])
 	, isBare{false}
@@ -8,7 +7,7 @@ Guitar::Guitar()
 	for (int i = 0; i < 12; ++i)
 		chords[i] = new std::string[4];
 	//chords[0] -- [2] chord, [3] -- [8] thresholds, [9] -- [10] barre threshold
-	chords[0][0] = "C  010230  "; chords[0][1] = "c  345530b3"; chords[0][2] = "C7 013230  "; chords[0][3] = "c7 343530b3";
+	chords[0][0] = "C  010230  "; chords[0][1] = "c  345533b3"; chords[0][2] = "C7 013230  "; chords[0][3] = "c7 343530b3";
 	chords[1][0] = "C# 466644b4"; chords[1][1] = "c# 456644b4"; chords[1][2] = "C#7464644b4"; chords[1][3] = "c#7454640b4";
 	chords[2][0] = "D  23200x  "; chords[2][1] = "d  13200x  "; chords[2][2] = "D7 21200x  "; chords[2][3] = "d7 11200x  ";
 	chords[3][0] = "D# 688866b6"; chords[3][1] = "d# 678866b6"; chords[3][2] = "D#7686866b6"; chords[3][3] = "d#7666866b6";
@@ -23,6 +22,7 @@ Guitar::Guitar()
 	
 	strings[0] = "e"; strings[1] = "H"; strings[2] = "G";
 	strings[3] = "D"; strings[4] = "A"; strings[5] = "E";
+	setDefaultParameters();
 }
 
 
@@ -48,10 +48,13 @@ void Guitar::drawStrings()
 		for (int j = 0; j < 8; ++j) //thresholds 1 2 3 4 5 
 		{
 			if (j == 0) std::cout << "   " << strings[i][0] << "   ";
-			if ((isBare == true) && (numberOfString[i] == numberBare - 1))
+
+			if ((isBare == true) && (j == numberBare - 1))
 				std::wcout << bare[0] << bare[1] << bare[2] << bare[3];
+
 			else if (numberOfString[i] == j)
 				std::cout << pressed[0] << pressed[1] << pressed[2] << pressed[3];
+
 			else
 				std::cout << empty[0] << empty[1] << empty[2] << empty[3];
 		}
@@ -132,14 +135,13 @@ void Guitar::moveCursor()
 			Common::gotoXY(x, y); std::cout << marker;
 			continue;
 		}
-		if (GetAsyncKeyState(VK_RETURN)) //show parameters
+		if (GetAsyncKeyState(VK_RETURN))
 		{
 			system("cls");
 			setThresholds();
-			std::cout << "Number of strings array: ";
-			for (int i = 0; i < 6; ++i)
-				std::cout << numberOfString[i];
-			std::cout << std::endl;
+			drawStrings();
+			listChords();
+			Common::gotoXY(x, y); std::cout << marker;
 			continue;
 		}
 		if (GetAsyncKeyState(VK_SPACE)) //test key
@@ -162,6 +164,7 @@ void Guitar::setThresholds()
 	chordsParameters = "";
 	bare = "";
 	numberBare = 0;
+	isBare = false;
 	for (int i = 0; i < 6; ++i)
 		numberOfString[i] = 0;
 	for (int i = 3; i < 9; ++i)
@@ -175,8 +178,8 @@ void Guitar::setThresholds()
 
 	for (int i = 5; i >= 0; --i)
 	{
-		if (chordsParameters[i] == 'x') //if silent, write -1 to array
-			numberOfString[i] = -1;
+		if (chordsParameters[i] == 'x') //if silent, write -10 to array
+			numberOfString[i] = -10;
 		else
 		{
 			int x = temp - (temp / 10) * 10;
@@ -187,9 +190,16 @@ void Guitar::setThresholds()
 
 	if (bare[0] == 'b')
 	{
+		isBare = true;
 		std::string tempBare = bare.substr(1, 2);
 		std::stringstream convertedBare(tempBare);
 		convertedBare >> numberBare;
-		//std::cout << numberBare << std::endl;
 	}
+}
+
+void Guitar::setDefaultParameters()
+{
+	isBare = false;
+	numberOfString[0] = -1; numberOfString[1] = 0; numberOfString[2] = -1;
+	numberOfString[3] = 1; numberOfString[4] = 2; numberOfString[5] = -1;
 }

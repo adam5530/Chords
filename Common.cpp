@@ -6,7 +6,7 @@ Common::Common()
 	rect.Top = 0;
 	rect.Left = 0;
 	rect.Bottom = 22;
-	rect.Right = 100;
+	rect.Right = 50;
 	SetConsoleWindowInfo(console, true, &rect);
 }
 

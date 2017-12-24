@@ -14,6 +14,13 @@ public:
 	~menu();
 
 	void drawMenu();
+	void resetMenuItem();
+	void help();
+	void aboutAutor();
+
+	int getMenuItem() const;
+
+	bool exitMenu();
 };
 
 #endif // MENU_H
