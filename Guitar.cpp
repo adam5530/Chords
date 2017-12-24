@@ -3,13 +3,9 @@
 
 Guitar::Guitar()
 	: chords(new std::string*[12])
+	, isBare{false}
 {
-	rect.Top = 0;
-	rect.Left = 0;
-	rect.Bottom = 22;
-	rect.Right = 50;
-	SetConsoleWindowInfo(console, true, &rect);
-	for (unsigned int i = 0; i < 12; ++i)
+	for (int i = 0; i < 12; ++i)
 		chords[i] = new std::string[4];
 	//chords[0] -- [2] chord, [3] -- [8] thresholds, [9] -- [10] barre threshold
 	chords[0][0] = "C  010230  "; chords[0][1] = "c  345530b3"; chords[0][2] = "C7 013230  "; chords[0][3] = "c7 343530b3";
@@ -41,15 +37,25 @@ Guitar::~Guitar()
 
 void Guitar::drawStrings()
 {
-	std::cout << "         1   2   3   4   5   6   7   8" << std::endl;
-	for (unsigned int i = 0; i < 6; ++i)
+	std::string bare = "|-";
+	bare += 219;
+	bare += '-';
+	std::string pressed = "|-O-";
+	std::string empty = "|---";
+	std::wcout << "         1   2   3   4   5   6   7   8" << std::endl;
+	for (int i = 0; i < 6; ++i) //strings E A D G H e
 	{
-		for (unsigned int j = 0; j < 8; ++j)
+		for (int j = 0; j < 8; ++j) //thresholds 1 2 3 4 5 
 		{
 			if (j == 0) std::cout << "   " << strings[i][0] << "   ";
-			std::cout << "|---";
+			if ((isBare == true) && (numberOfString[i] == numberBare - 1))
+				std::wcout << bare[0] << bare[1] << bare[2] << bare[3];
+			else if (numberOfString[i] == j)
+				std::cout << pressed[0] << pressed[1] << pressed[2] << pressed[3];
+			else
+				std::cout << empty[0] << empty[1] << empty[2] << empty[3];
 		}
-		std::cout << std::endl;
+		std::wcout << std::endl;
 	}
 }
 
@@ -68,9 +74,10 @@ void Guitar::listChords()
 	std::cout << "      Press ESC to back to main menu\t" << std::endl;
 }
 
-int Guitar::chord() const
+void Guitar::resetMarkerPos()
 {
-	return 0;
+	xMarkerPos = 0;
+	yMarkerPos = 0;
 }
 
 bool Guitar::exit()
@@ -83,10 +90,10 @@ bool Guitar::exit()
 
 void Guitar::moveCursor()
 {
-	int x = 6, y = 8;
+	static unsigned int x = 6, y = 8;
 	bool running = true;
 	const char* marker = "*";
-	Common::gotoXY(6, 8); std::cout << marker;
+	Common::gotoXY(x, y); std::cout << marker;
 	while (running)
 	{
 		system("pause>nul");
@@ -94,6 +101,7 @@ void Guitar::moveCursor()
 		{
 			Common::gotoXY(x, y); std::cout << "  ";
 			y++;
+			yMarkerPos++;
 			Common::gotoXY(x, y); std::cout << marker;
 			continue;
 		}
@@ -102,6 +110,7 @@ void Guitar::moveCursor()
 		{
 			Common::gotoXY(x, y); std::cout << "  ";
 			y--;
+			yMarkerPos--;
 			Common::gotoXY(x, y); std::cout << marker;
 			continue;
 		}
@@ -110,6 +119,7 @@ void Guitar::moveCursor()
 		{
 			Common::gotoXY(x, y); std::cout << "  ";
 			x -= 8;
+			xMarkerPos--;
 			Common::gotoXY(x, y); std::cout << marker;
 			continue;
 		}
@@ -118,13 +128,68 @@ void Guitar::moveCursor()
 		{
 			Common::gotoXY(x, y); std::cout << "  ";
 			x += 8;
+			xMarkerPos++;
 			Common::gotoXY(x, y); std::cout << marker;
 			continue;
 		}
+		if (GetAsyncKeyState(VK_RETURN)) //show parameters
+		{
+			system("cls");
+			setThresholds();
+			std::cout << "Number of strings array: ";
+			for (int i = 0; i < 6; ++i)
+				std::cout << numberOfString[i];
+			std::cout << std::endl;
+			continue;
+		}
+		if (GetAsyncKeyState(VK_SPACE)) //test key
+		{								//
+			system("cls");				//
+			drawStrings();				//
+			listChords();				//
+			moveCursor();				//
+		}///////////////////////////////////
 		if (GetAsyncKeyState(VK_ESCAPE))
 		{
 			system("cls");
 			running = false;
 		}
+	}
+}
+
+void Guitar::setThresholds()
+{
+	chordsParameters = "";
+	bare = "";
+	numberBare = 0;
+	for (int i = 0; i < 6; ++i)
+		numberOfString[i] = 0;
+	for (int i = 3; i < 9; ++i)
+		chordsParameters += chords[yMarkerPos][xMarkerPos][i];
+	for (int i = 9; i < 11; ++i)
+		bare += chords[yMarkerPos][xMarkerPos][i];
+
+	std::stringstream converted(chordsParameters);
+	int temp = 0;
+	converted >> temp;
+
+	for (int i = 5; i >= 0; --i)
+	{
+		if (chordsParameters[i] == 'x') //if silent, write -1 to array
+			numberOfString[i] = -1;
+		else
+		{
+			int x = temp - (temp / 10) * 10;
+			numberOfString[i] = x - 1;
+			temp /= 10;
+		}
+	}
+
+	if (bare[0] == 'b')
+	{
+		std::string tempBare = bare.substr(1, 2);
+		std::stringstream convertedBare(tempBare);
+		convertedBare >> numberBare;
+		//std::cout << numberBare << std::endl;
 	}
 }

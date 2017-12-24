@@ -1,11 +1,9 @@
 #ifndef MENU_H
 #define MENU_H
 
-#include <iostream>
-
 #include "Common.h"
 
-class menu : public Common
+class menu : private Common
 {
 private:
 	HANDLE console;
