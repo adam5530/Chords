@@ -12,9 +12,12 @@ private:
 	SMALL_RECT rect;
 
 protected:
-	void gotoXY(int, int);
+	//variables
 	int menu_item;
-
+	bool running;
+	//functions
+	void gotoXY(int, int);
+	
 public:
 	Common();
 	~Common();

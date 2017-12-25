@@ -13,13 +13,13 @@ void menu::drawMenu()
 {
 	system("Color 18");
 	int x = 7;
-	bool running = true;
+	Common::running = true;
 	const char* marker = "*";
 
 	Common::gotoXY(18, 5); std::cout << "Main Menu";
 	Common::gotoXY(18, 7); std::cout << marker;
 
-	while (running)
+	while (Common::running)
 	{
 		Common::gotoXY(20, 7);  std::cout << "1) Start";
 		Common::gotoXY(20, 8);  std::cout << "2) Help";
@@ -56,7 +56,7 @@ void menu::drawMenu()
 			}
 			case 1: {
 				system("cls");
-				Common::gotoXY(20, 16);
+				running = false;
 				break;
 			}
 			case 2: {
@@ -68,6 +68,7 @@ void menu::drawMenu()
 				system("cls");
 				Common::gotoXY(20, 16);
 				running = false;
+				break;
 			}
 			}
 		}
@@ -81,13 +82,34 @@ void menu::resetMenuItem()
 	menu_item = 0;
 }
 
+void menu::help()
+{
+	system("Color 18");
+	std::cout << "Main menu:" << std::endl;
+	std::cout << "Press down/up key to move cursor" << std::endl;
+	std::cout << "and pres enter to choose the option." << std::endl;
+	std::cout << "Press escape to back main menu." << std::endl;
+
+	std::cout << "How to move in program???" << std::endl;
+	std::cout << "If You are in first option - start-" << std::endl;
+	std::cout << "press up/down/left/right to choose" << std::endl;
+	std::cout << "the chord. Press enter to accept" << std::endl;
+	std::cout << "the chord. Press escape to back" << std::endl;
+	std::cout << "main menu" << std::endl;
+	
+	system("pause>nul");
+	system("cls");
+}
+
 void menu::aboutAutor()
 {
 	system("Color 18");
 	Common::gotoXY(22, 7); std::cout << "Adam Lacki" << std::endl;
 	Common::gotoXY(21, 8); std::cout << "Lodz - Poland" << std::endl;
 	Common::gotoXY(20, 9); std::cout << "C++ programmer :)" << std::endl;
+
 	system("pause>nul");
+	system("cls");
 }
 
 int menu::getMenuItem() const

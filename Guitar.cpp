@@ -47,7 +47,10 @@ void Guitar::drawStrings()
 	{
 		for (int j = 0; j < 8; ++j) //thresholds 1 2 3 4 5 
 		{
-			if (j == 0) std::cout << "   " << strings[i][0] << "   ";
+			if (j == 0 && numberOfString[i] == -10) 
+				std::cout << "   " << strings[i][0] << "  X";
+			else if (j == 0)
+				std::cout << "   " << strings[i][0] << "   ";
 
 			if ((isBare == true) && (j == numberBare - 1))
 				std::wcout << bare[0] << bare[1] << bare[2] << bare[3];
@@ -179,7 +182,9 @@ void Guitar::setThresholds()
 	for (int i = 5; i >= 0; --i)
 	{
 		if (chordsParameters[i] == 'x') //if silent, write -10 to array
+		{
 			numberOfString[i] = -10;
+		}
 		else
 		{
 			int x = temp - (temp / 10) * 10;
