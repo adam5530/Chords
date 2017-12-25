@@ -8,6 +8,13 @@ Common::Common()
 	rect.Bottom = 22;
 	rect.Right = 50;
 	SetConsoleWindowInfo(console, true, &rect);
+
+	//////////////////////////////////////////////// not blinking
+	CONSOLE_CURSOR_INFO     cursorInfo;			  // underscore
+	GetConsoleCursorInfo(console, &cursorInfo);   //
+	cursorInfo.bVisible = false;				  //
+	SetConsoleCursorInfo(console, &cursorInfo);   //
+	////////////////////////////////////////////////
 }
 
 
