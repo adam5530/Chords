@@ -3,11 +3,13 @@
 Common::Common()
 	: console(GetStdHandle(STD_OUTPUT_HANDLE))
 {
-	rect.Top = 0;
-	rect.Left = 0;
-	rect.Bottom = 22;
-	rect.Right = 50;
-	SetConsoleWindowInfo(console, true, &rect);
+	////////////////////////////////////////////// set size of console
+	rect.Top = 0;								//
+	rect.Left = 0;								//
+	rect.Bottom = 22;							//
+	rect.Right = 50;							//
+	SetConsoleWindowInfo(console, true, &rect);	//
+	//////////////////////////////////////////////
 
 	//////////////////////////////////////////////// not blinking
 	CONSOLE_CURSOR_INFO     cursorInfo;			  // underscore

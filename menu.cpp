@@ -2,6 +2,7 @@
 
 menu::menu()
 {
+	system("Color 18");
 }
 
 
@@ -85,17 +86,21 @@ void menu::resetMenuItem()
 void menu::help()
 {
 	system("Color 18");
-	std::cout << "Main menu:" << std::endl;
-	std::cout << "Press down/up key to move cursor" << std::endl;
-	std::cout << "and pres enter to choose the option." << std::endl;
-	std::cout << "Press escape to back main menu." << std::endl;
 
-	std::cout << "How to move in program???" << std::endl;
-	std::cout << "If You are in first option - start-" << std::endl;
-	std::cout << "press up/down/left/right to choose" << std::endl;
-	std::cout << "the chord. Press enter to accept" << std::endl;
-	std::cout << "the chord. Press escape to back" << std::endl;
-	std::cout << "main menu" << std::endl;
+	std::cout << std::endl << std::endl;
+	std::cout << "\t\t    Main menu:" << std::endl;
+	std::cout << std::endl;
+	std::cout << "\t Press down/up  key  to  move cursor" << std::endl;
+	std::cout << "\t and pres enter to choose the option." << std::endl;
+	std::cout << "\t Press  escape  to  back  main  menu." << std::endl;
+	std::cout << std::endl;
+
+	std::cout << "\t How  to  move  in  program???" << std::endl;
+	std::cout << "\t If You are in first option - start-" << std::endl;
+	std::cout << "\t press up/down/left/right to choose" << std::endl;
+	std::cout << "\t the chord. Press  enter to  accept" << std::endl;
+	std::cout << "\t the  chord. Press  escape  to back" << std::endl;
+	std::cout << "\t main menu" << std::endl;
 	
 	system("pause>nul");
 	system("cls");
