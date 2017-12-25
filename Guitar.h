@@ -20,8 +20,8 @@ private:
 
 	int numberOfString[6]; //for example [0] first string which threshold
 
-	bool isBare;
-	int numberBare;
+	bool isBare;		   //check is chord is bare
+	int numberBare;		   //info about number of threshold bare
 
 public:
 	Guitar();
@@ -29,12 +29,12 @@ public:
 
 	void drawStrings();		//function to draw strings of guitar
 	void listChords();		//function to list all chords
-	void moveCursor();		//function to move cursor in the list of chords
+	void moveCursor(unsigned int x,unsigned int y);		//function to move cursor in the list of chords
 	void resetMarkerPos();	//set marker position 0 0
-	void setThresholds();
-	void setDefaultParameters();
+	void setThresholds();	//set in which threshold press string, or silent string
+	void setDefaultParameters(); //default parameters cursor, default chord C etc.
 
-	bool exit();
+	bool exit();		    //exit from guitar to main menu
 };
 
 #endif // GUITAR_H

@@ -30,9 +30,11 @@ Guitar::~Guitar()
 {
 	for (unsigned int i = 0; i < 12; ++i)
 	{
-		if (!chords[i]) delete[] chords[i];
+		if (!chords[i]) 
+			delete[] chords[i];
 	}
-	if (!chords) delete[] chords;
+	if (!chords) 
+		delete[] chords;
 }
 
 void Guitar::drawStrings()
@@ -94,9 +96,9 @@ bool Guitar::exit()
 }
 
 
-void Guitar::moveCursor()
+void Guitar::moveCursor(unsigned int x, unsigned int y)
 {
-	static unsigned int x = 6, y = 8;
+	//static unsigned int x = 6, y = 8;
 	bool running = true;
 	const char* marker = "*";
 	Common::gotoXY(x, y); std::cout << marker;
@@ -147,13 +149,6 @@ void Guitar::moveCursor()
 			Common::gotoXY(x, y); std::cout << marker;
 			continue;
 		}
-		if (GetAsyncKeyState(VK_SPACE)) //test key
-		{								//
-			system("cls");				//
-			drawStrings();				//
-			listChords();				//
-			moveCursor();				//
-		}///////////////////////////////////
 		if (GetAsyncKeyState(VK_ESCAPE))
 		{
 			system("cls");

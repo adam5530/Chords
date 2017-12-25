@@ -15,6 +15,17 @@ Common::Common()
 	cursorInfo.bVisible = false;				  //
 	SetConsoleCursorInfo(console, &cursorInfo);   //
 	////////////////////////////////////////////////
+
+	/////////////////////////////////////////////////// hide scrollbars
+	CONSOLE_SCREEN_BUFFER_INFO info;				 //
+	GetConsoleScreenBufferInfo(console, &info);	     //
+	COORD new_size =								 //
+	{												 //
+		info.srWindow.Right - info.srWindow.Left + 1,//
+		info.srWindow.Bottom - info.srWindow.Top + 1 //
+	};												 //
+	SetConsoleScreenBufferSize(console, new_size);   //
+	///////////////////////////////////////////////////
 }
 
 
