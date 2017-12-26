@@ -15,7 +15,7 @@ void menu::drawMenu()
 	system("Color 18");
 	int x = 7;
 	Common::running = true;
-	const char* marker = "*";
+	const char* marker = ">";
 
 	Common::gotoXY(18, 5); std::cout << "Main Menu";
 	Common::gotoXY(18, 7); std::cout << marker;
@@ -24,7 +24,7 @@ void menu::drawMenu()
 	{
 		Common::gotoXY(20, 7);  std::cout << "1) Start";
 		Common::gotoXY(20, 8);  std::cout << "2) Help";
-		Common::gotoXY(20, 9);  std::cout << "3) About autor";
+		Common::gotoXY(20, 9);  std::cout << "3) About program";
 		Common::gotoXY(20, 10); std::cout << "Quit Program";
 
 		system("pause>nul");
@@ -106,12 +106,11 @@ void menu::help()
 	system("cls");
 }
 
-void menu::aboutAutor()
+void menu::aboutProgram()
 {
 	system("Color 18");
-	Common::gotoXY(22, 7); std::cout << "Adam Lacki" << std::endl;
-	Common::gotoXY(21, 8); std::cout << "Lodz - Poland" << std::endl;
-	Common::gotoXY(20, 9); std::cout << "C++ programmer :)" << std::endl;
+	Common::gotoXY(18, 7); std::cout << "Guitar Chords" << std::endl;
+	Common::gotoXY(21, 8); std::cout << "Ver 1.0" << std::endl;
 
 	system("pause>nul");
 	system("cls");

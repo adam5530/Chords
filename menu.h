@@ -16,7 +16,7 @@ public:
 	void drawMenu();
 	void resetMenuItem();
 	void help();
-	void aboutAutor();
+	void aboutProgram();
 
 	int getMenuItem() const;
 
